@@ -1,0 +1,40 @@
+#!/bin/sh
+
+# Allowes to use regular expressions to
+# change names of many files in current
+# directory at once.
+
+ACTION=$1
+SEARCH=$2
+REPLACE=$3
+
+for input in "$ACTION" "$SEARCH"
+do
+    if [ "$input" = "" ]; then
+	echo USAGE:
+	echo "regex-rename action search [replace]"
+	echo "action is one of mv | echo"
+	exit 1
+    fi
+done
+
+if [ "$ACTION" = "echo" ]; then
+    for file in *
+    do
+	echo $file | sed "s/$SEARCH/$REPLACE/"
+    done
+fi
+
+if [ "$ACTION" = "mv" ]; then
+    for file in *
+    do
+	newname=`echo $file | sed "s/$SEARCH/$REPLACE/"`
+	if [ "$file" = "$newname" ]; then
+	    echo skip "$file"
+	else
+	    mv "$file" "$newname"
+	fi
+    done
+fi
+
+exit 0

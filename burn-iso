@@ -1,0 +1,8 @@
+#!/bin/sh
+
+# burn iso file to disk with wodim
+# iso file should be provided as arg
+
+wodim -eject -dao -speed=0 dev=/dev/scd0 -v -data $*
+
+exit 0

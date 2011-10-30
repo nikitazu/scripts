@@ -1,0 +1,58 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+# Copies files recursively from one directory to
+# another within alphabetical order.
+# Usefull for mobile devices that show
+# files in the same order they were created.
+
+import sys
+import shutil
+
+from os import listdir, mkdir, system
+from os.path import exists, join, isfile, isdir
+
+def main():
+    if len(sys.argv) != 3:
+        print 'USAGE: cp-sort source-dir target-dir'
+        sys.exit(1)
+    else:
+        try:
+            copy(sys.argv[1], sys.argv[2])
+        except Exception as inst:
+            print 'ERROR: ' + ' '.join(inst.args)
+            exit(1)
+
+
+def copy(source, target):
+    if not exists(source):
+        raise Exception('source not exists', source)
+
+    if isfile(source):
+        print 'INFO: copying file [%s] -> [%s]' % (source, target)
+        shutil.copy(source, target)
+        system('sync')
+    else:
+        copy_dir(source, target)
+
+
+def copy_dir(source, target):
+    if not exists(target):
+        print 'INFO: directory [' + target + '] not exists, creating'
+        mkdir(target)
+    elif not isdir(target):
+        raise Exception('not a directory', target)
+
+    paths = sorted(listdir(source))
+
+    if len(paths) > 0:
+        print 'INFO: copying directory [%s] -> [%s]' % (source, target)
+
+    for path in paths:
+        src = join(source, path)
+        tgt = join(target, path)
+        copy(src, tgt)
+
+
+if __name__ == '__main__':
+    main()

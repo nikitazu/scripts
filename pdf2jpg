@@ -1,0 +1,29 @@
+#!/bin/bash
+
+INFILE=$1
+OUTFILE=${INFILE/.pdf/.jpg}
+DIRNAME=$2
+
+if [ "$INFILE" = "" ]; then
+    echo ERROR input file name not specified
+    echo USAGE: pdf2jpg INFILE [DIRNAME]
+    exit 1
+fi
+
+if [ "$DIRNAME" = "" ]; then
+    echo converting $INFILE to $OUTFILE
+    convert -density 300 "$INFILE" "$OUTFILE"
+else
+    echo converting $INFILE to $DIRNAME/$OUTFILE
+    
+    if [ -d $DIRNAME ]; then
+	echo $DIRNAME exists converting there
+    else
+	echo creating $DIRNAME and converting there
+	mkdir -p "$DIRNAME"
+    fi
+    convert -density 300 "$INFILE" "$DIRNAME/$OUTFILE"
+fi
+
+
+exit 0

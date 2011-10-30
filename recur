@@ -1,0 +1,51 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+# Recurate through directory tree executing
+# shell script provided as commandline
+# argument on every file.
+
+import sys
+import shutil
+
+from os import listdir, mkdir, system
+from os.path import exists, join, isfile, isdir
+
+def main():
+    if len(sys.argv) != 3:
+        print 'USAGE: recur source-dir func'
+        sys.exit(1)
+    else:
+        try:
+            recur(sys.argv[1], sys.argv[2])
+        except Exception as inst:
+            print 'ERROR: ' + ' '.join(inst.args)
+            exit(1)
+
+
+def recur(source, func):
+    if not exists(source):
+        raise Exception('source not exists', source)
+
+    if isfile(source):
+        #print 'INFO: applying to file [%s]' % (source, )
+        command = func.replace('%f', source)
+        system(command)
+    else:
+        recur_dir(source, func)
+
+
+def recur_dir(source, func):
+    paths = sorted(listdir(source))
+
+    if len(paths) > 0:
+        #print 'INFO: applying to directory [%s]' % (source, )
+        pass
+
+    for path in paths:
+        src = join(source, path)
+        recur(src, func)
+
+
+if __name__ == '__main__':
+    main()

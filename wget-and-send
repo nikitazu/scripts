@@ -1,0 +1,70 @@
+#!/usr/bin/env python
+
+# WGet files from the internet and send them
+# to your mail splitted by 4Mb.
+
+import sys
+#import os
+from os import listdir, mkdir, system
+from os.path import exists, join, isfile, isdir
+
+def main():
+    archive_name = sys.argv[1]
+    files = make_pairs(sys.argv[2:])
+
+    make_dir(archive_name)
+
+    for name, uri in files:
+        download_file(archive_name, name, uri)
+
+    make_archive(archive_name)
+    send_archive(archive_name)
+
+
+def make_pairs(lst):
+    i = 0
+    result = []
+    length = len(lst) - 1
+
+    while i < length:
+        result.append((lst[i], lst[i + 1]))
+        i += 2
+
+    return result
+
+
+def make_dir(name):
+    print 'make dir ' + name
+    if exists(name):
+        system('rm -rf ' + name)
+
+    mkdir(name)
+
+
+def download_file(dir_name, file_name, uri):
+    print 'down ' + file_name + ' from ' + uri
+    system('curl ' + uri + ' -o ' + join(dir_name, file_name))
+
+
+def make_archive(name):
+    print 'arch ' + name
+    zip_options = '-t7z -v4m -y -m0=lzma -mx=9 -mfb=64 -md=32m -ms=on -mhe=on'
+    archive = name + '.7z'
+    system('7z a ' + zip_options + ' ' + archive + ' ' + name)
+    system('rm -rf ' + name)
+
+
+def send_archive(name):
+    print 'mail ' + name
+    archive = name + '.7z.*'
+    subject = "[RGET] " + name
+    template = 'for f in %s; do echo OK | mutt -s "%s" -a $f -- %s; done'
+    script = template % (archive, subject, 'nikitazu@gmail.com')
+    print script
+    system(script)
+    system('rm -rf ' + archive)
+
+
+if __name__ == '__main__':
+    main()
+

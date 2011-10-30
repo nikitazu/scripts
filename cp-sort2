@@ -1,0 +1,42 @@
+#!/bin/sh
+
+# Copies files recursively from one directory to
+# another within alphabetical order.
+# Usefull for mobile devices that show
+# files in the same order they were created.
+
+src=$1
+tgt=$2
+
+if [ "$src" = "" -o "$tgt" = "" ]; then
+    echo "USAGE: cp-sort2 source target"
+    exit 1
+fi
+
+if [ -f "$src" ]; then
+    echo "copying file [$src] -> [$tgt]"
+    cp "$src" "$tgt"
+    sync
+    exit 0
+fi
+
+if [ -d "$src" ]; then
+    echo "copying dir [$src] -> [$tgt]"
+    if [ ! -d "$src" ]; then
+	echo "error: source dir [$src] not exists"
+	exit 2
+    fi
+    if [ -f "$tgt" ]; then
+	echo "error: cannot create target dir [$tgt], it is a file"
+	exit 3
+    fi
+    if [ ! -d "$tgt" ]; then
+	echo "dir [$tgt] not exists, creating"
+	mkdir -p "$tgt"
+    fi
+    for p in `ls "$src"`; do cp-sort2 "$src/$p" "$tgt/$p"; done
+else
+    echo "error: $src not exists"
+fi
+
+exit 0

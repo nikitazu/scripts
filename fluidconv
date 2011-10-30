@@ -1,0 +1,26 @@
+#!/bin/sh
+
+# Converts midi file to wav using fluidsynth.
+# You have to specify $soundfont path in src.
+
+if [ "$1" = "" ]; then
+    echo input midi-file missing
+    exit 1
+fi
+
+# path to soundfont file
+sounfont=~/sf2/piano/SteinwayGrandPiano1.2.sf2
+
+for input in $*
+do
+    # output file name
+    output=$input.wav
+
+
+    fluidsynth -ilv \
+	-a file \
+	$soundfont $input \
+	-o audio.file.name=$output
+done
+
+exit 0

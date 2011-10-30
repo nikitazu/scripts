@@ -1,0 +1,16 @@
+Usefull scripts
+===============
+
+├── burn-iso       # burn iso file to disk
+├── cp-sort        # recursively copy files in alphabetical order
+├── cp-sort2
+├── fluidconv      # convert midi to wav
+├── fluidconv-mp3  # convert midi to mp3
+├── fluidconv-ogg  # convert midi to ogg
+├── mplayer-cp     # switch mplayer subtitles encoding
+├── pdf2jpg        # convert pdf to jpg
+├── png2jpg        # convert png to jpg
+├── recur          # exec scripts on files in directory recursively
+├── regex-rename   # rename a group of files
+└── wget-and-send  # download files and email them splitted
+

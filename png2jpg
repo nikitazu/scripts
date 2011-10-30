@@ -1,0 +1,26 @@
+#!/bin/bash
+
+INFILE=$1
+OUTFILE=$2
+
+if [ "$INFILE" = "" ]; then
+    echo ERROR input file name not specified
+    echo USAGE: pdf2jpg INFILE OUTFILE
+    exit 1
+fi
+
+if [ ! -f "$INFILE" ]; then
+    echo ERROR input file not found on disk
+    exit 2
+fi
+
+if [ "$OUTFILE" = "" ];
+then
+    OUTFILE=${INFILE/.png/.jpg}
+fi
+
+
+echo converting $INFILE to $OUTFILE
+convert -density 300 "$INFILE" "$OUTFILE"
+
+exit 0

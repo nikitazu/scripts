@@ -1,0 +1,34 @@
+#!/bin/sh
+
+# Each call to this script changes default
+# subtitles encoding (utf-8 or cp1251)
+# in mplayer settings.
+
+CPFILE=~/.mplayercp
+CONFIG=~/.mplayer/config
+CONFIGBK=$CONFIG.backup
+
+if [ -f $CPFILE ]; then
+    CURRENTCP=`cat $CPFILE`
+else
+    CURRENTCP=utf8
+fi
+
+echo current mplayer codepage is $CURRENTCP
+
+if [ "$CURRENTCP" = "utf8" ]; then
+    NEWCP=cp1251
+else
+    NEWCP=utf8
+fi
+
+echo switching mplayer codepage to $NEWCP
+echo $NEWCP>$CPFILE
+
+cp $CONFIG $CONFIGBK
+sed "s/$CURRENTCP/$NEWCP/" "$CONFIGBK">$CONFIG
+
+echo done, new config is
+cat $CONFIG
+
+exit 0
