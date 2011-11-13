@@ -1,0 +1,42 @@
+#!/usr/bin/env python
+
+import sys,os
+
+resolutions = {
+    '640x480': 95,
+    '800x600': 95,
+    '1024x600':94,
+    '1024x768':94,
+    '1152x768':94,
+    '1152x864':93,
+    '1280x768':93,
+    '1366x768':93,
+    '1280x800':93,
+    '1280x854':93,
+    '1280x960':92,
+    '1280x1024':92,
+    '1400x1050':91,
+    '1440x900':91,
+    '1600x1024':90,
+    '1600x900':90,
+    '1600x1200':89,
+    '1680x1050':89,
+    '1920x1200':80,
+    '1920x1080':80,
+    '3200x1200':70
+    }
+
+def convert(in_name, out_name):
+  for res in resolutions:
+    quality = resolutions[res]
+    print 'creating img of size %s and quality %s' % (res,quality)
+    out_name_result = out_name + '-' + res + '.jpg'
+    command = 'gm convert %s -geometry %s -quality %s -interlace None -colorspace YCbCr -sampling-factor 2x2 %s'
+    os.system(command % (in_name, res, quality, out_name_result))
+
+if __name__ == '__main__':
+  infile = sys.argv[1]
+  outfile = sys.argv[2]
+  print 'converting ' + infile + ' to ' + outfile
+  convert(infile, outfile)
+
