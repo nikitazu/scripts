@@ -1,0 +1,13 @@
+#!/bin/sh
+
+name=$1
+
+if [ "$name" == "" ]; then
+  echo please choose radio name
+  ls /mnt/data/mus/plists
+else
+  mplayer -playlist /mnt/data/mus/plists/$1
+fi
+
+exit 0
+

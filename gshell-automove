@@ -1,0 +1,35 @@
+#!/bin/sh
+
+app=$1
+num=$2
+
+if [ "$app" == "" ]; then
+  echo "USAGE: $0 app num"
+  echo "app is missing"
+  exit 1;
+fi
+
+if [ "$num" == "" ]; then
+  echo "USAGE: $0 app num"
+  echo "num is missing"
+  exit 1;
+fi
+
+if [ -f "/usr/share/applications/$app.desktop" ]; then
+  echo "$app found"
+else
+  echo "$app not found in /usr/share/applications"
+  exit 1
+fi
+
+apps=`gsettings get org.gnome.shell.extensions.auto-move-windows application-list`
+appslist=${apps:1:-1}
+newappslist="['$app.desktop:$num',$appslist]"
+
+echo "was: [$appslist]"
+echo "now: $newappslist"
+
+gsettings set org.gnome.shell.extensions.auto-move-windows  application-list "$newappslist"
+
+exit 0
+
