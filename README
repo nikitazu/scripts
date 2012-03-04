@@ -4,6 +4,8 @@ Usefull scripts
 ├── burn-iso       # burn iso file to disk
 ├── cp-sort        # recursively copy files in alphabetical order
 ├── cp-sort2
+├── ffrec-dvd      # record dvd quality with ffmpeg from webcam
+├── ffrec-vcd      # record vcd quality with ffmpeg from webcam
 ├── fluidconv      # convert midi to wav
 ├── fluidconv-mp3  # convert midi to mp3
 ├── fluidconv-ogg  # convert midi to ogg

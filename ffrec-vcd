@@ -1,0 +1,7 @@
+#!/bin/sh
+
+name=`date +%Y.%m.%d_%H.%M`
+path="out_$name.mpg"
+
+ffmpeg -f alsa -ac 2 -i hw:2 -f video4linux2 -i /dev/video0 -target pal-vcd $path
+
