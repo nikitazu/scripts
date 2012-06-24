@@ -1,0 +1,8 @@
+#!/bin/sh
+
+# split flac file in current directory using cue file timings
+# and write tags to flac files
+
+shntool split -f *.cue -o flac *.flac && \
+cuetag *.cue split-track*.flac
+
