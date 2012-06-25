@@ -2,7 +2,6 @@
 
 for flac in *.flac;
 do
-  mpeg=`echo $flac | cut -f1 -d.`.mp3
-  flac -d -c "$flac" | lame --cbr -b 192 - "$mpeg"
+  newname=`echo $flac | sed s/\.flac$/\.mp3/`
+  flac -d -c "$flac" | lame -S --cbr -b 192 - "$newname"
 done
-
