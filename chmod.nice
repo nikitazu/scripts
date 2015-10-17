@@ -1,0 +1,5 @@
+#!/bin/sh
+
+echo changing to nice permission $*
+chmod 775 -R $*
+
