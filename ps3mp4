@@ -1,0 +1,3 @@
+ffmpeg -y -i senran.kagura.mkv -c:v libx264 -preset ultrafast -threads 4 -strict -2 -c:a aac -ac 2 out8.mp4
+
+ffmpeg -y -i senvid.h264 -i senaud.aac -c:v libx264 -preset ultrafast -threads 4 -strict -2 -c:a aac -ac 2 -vf ass=sensub.ass out13.mp4

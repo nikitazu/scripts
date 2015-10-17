@@ -1,0 +1,15 @@
+#!/bin/sh
+
+if kextstat | grep AirPort.Brcm4331;
+then
+  echo OK, patching driver
+  sudo perl -pi -e 's|\x81\x78\x30\x6B\x10\x00\x00\x0F\x85|\x81\x78\x30\x6B\x10\x00\x00\x90\xE9|' /System/Library/Extensions/IO80211Family.kext/Contents/PlugIns/AirPortBrcm4331.kext/Contents/MacOS/AirPortBrcm4331
+  sudo touch /System/Library/Extensions/
+  echo Please, wait for 1 minute and restart your mac
+else
+  echo FAIL, not a Broadcom 4331 driver
+  echo Your driver is
+  kextstat | grep AirPort
+fi
+
+

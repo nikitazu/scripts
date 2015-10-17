@@ -1,0 +1,15 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+import fileinput
+
+tracks_found = False
+
+for line in fileinput.input():
+    if line == u"|+ Дорожки сегмента":
+        tracks_found = True
+    
+    if not tracks_found:
+        continue
+    
+    print line
