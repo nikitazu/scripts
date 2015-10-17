@@ -1,0 +1,38 @@
+[user]
+	name = Nikita B. Zuev
+	email = nikitazu@gmail.com
+[credential]
+	helper = osxkeychain
+[core]
+	excludesfile = /Users/nikitazu/.gitignore_global
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
+[mergetool "sourcetree"]
+	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
+[push]
+	default = simple
+[color "branch"]
+	current = yellow reverse
+	local = yellow
+	remote = green
+[color "diff"]
+	meta = yellow bold
+	frag = magenta bold
+	old = red bold
+	new = green bold
+[color "status"]
+	added =	yellow
+	changed = green
+	untracked = cyan
+[merge]
+	conflictstyle = diff3
+[alias]
+	st = status
+	ci = commit
+	br = branch
+	co = checkout
+	df = diff
+	lg = log --oneline --graph --decorate
+
